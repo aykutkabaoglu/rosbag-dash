@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rosbag_dash.bagdash &mdash; rosbag-dash 0.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            rosbag-dash
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">rosbag-dash</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">rosbag_dash.bagdash</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for rosbag_dash.bagdash</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author : Aykut Kabaoglu</span>
+<span class="c1"># Initial Date: October, 2023</span>
+<span class="c1"># License: MIT License</span>
+
+<span class="c1">#   Permission is hereby granted, free of charge, to any person obtaining</span>
+<span class="c1">#   a copy of this software and associated documentation files</span>
+<span class="c1">#   (the &quot;Software&quot;), to deal in the Software without restriction, including</span>
+<span class="c1">#   without limitation the rights to use, copy, modify, merge, publish,</span>
+<span class="c1">#   distribute, sublicense, and/or sell copies of the Software, and to</span>
+<span class="c1">#   permit persons to whom the Software is furnished to do so, subject</span>
+<span class="c1">#   to the following conditions:</span>
+
+<span class="c1">#   The above copyright notice and this permission notice shall be</span>
+<span class="c1">#   included in all copies or substantial portions of the Software.</span>
+
+<span class="c1">#   THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF</span>
+<span class="c1">#   ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED</span>
+<span class="c1">#   TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A</span>
+<span class="c1">#   PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT</span>
+<span class="c1">#   SHALL THE AUTHORS, COPYRIGHT HOLDERS OR ARIZONA BOARD OF REGENTS</span>
+<span class="c1">#   BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN</span>
+<span class="c1">#   AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1">#   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE</span>
+<span class="c1">#   OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Aykut Kabaoglu&#39;</span>
+<span class="n">__email__</span>  <span class="o">=</span> <span class="s1">&#39;aykutkabaoglu@gmail.com&#39;</span>
+
+<span class="kn">import</span> <span class="nn">dash</span>
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dash_table</span>
+<span class="kn">from</span> <span class="nn">dash.dependencies</span> <span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">State</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">numpy</span>  <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+
+<span class="kn">from</span> <span class="nn">.bagplot</span> <span class="kn">import</span> <span class="n">BagPlot</span>
+
+<div class="viewcode-block" id="BagDash"><a class="viewcode-back" href="../../rosbag_dash.html#rosbag_dash.bagdash.BagDash">[docs]</a><span class="k">class</span> <span class="nc">BagDash</span><span class="p">(</span><span class="n">BagPlot</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bagfile</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bagfile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">dash</span><span class="o">.</span><span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_time</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="p">[])</span>
+        
+<div class="viewcode-block" id="BagDash.run"><a class="viewcode-back" href="../../rosbag_dash.html#rosbag_dash.bagdash.BagDash.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BagDash.add_dash_graph"><a class="viewcode-back" href="../../rosbag_dash.html#rosbag_dash.bagdash.BagDash.add_dash_graph">[docs]</a>    <span class="k">def</span> <span class="nf">add_dash_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg_dict</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_figure</span><span class="p">(</span><span class="n">msg_dict</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()),</span> <span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="BagDash.add_dash_dataTable"><a class="viewcode-back" href="../../rosbag_dash.html#rosbag_dash.bagdash.BagDash.add_dash_dataTable">[docs]</a>    <span class="k">def</span> <span class="nf">add_dash_dataTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        create dash datatable from pandas dataframe</span>
+<span class="sd">        the selected row&#39;s timestamp will be shown on any other graphs to indicate same moment by drawing vertical line</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">table_id</span> <span class="o">=</span> <span class="s1">&#39;table&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span>
+              <span class="nb">id</span><span class="o">=</span> <span class="n">table_id</span><span class="p">,</span>
+              <span class="n">columns</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">col</span><span class="p">),</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">col</span><span class="p">)}</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span><span class="p">],</span>
+              <span class="n">data</span><span class="o">=</span><span class="n">dataframe</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">),</span>
+              <span class="n">style_table</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="s1">&#39;400px&#39;</span><span class="p">,</span> <span class="s1">&#39;overflowY&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">},</span>
+              <span class="n">style_cell</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;minWidth&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;maxWidth&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;whiteSpace&#39;</span><span class="p">:</span> <span class="s1">&#39;normal&#39;</span><span class="p">},</span>
+              <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+              <span class="n">filter_action</span><span class="o">=</span><span class="s2">&quot;native&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+        <span class="c1"># get all Graph objects in the layout</span>
+        <span class="n">output_figure_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">):</span>
+                <span class="n">output_figure_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">,</span> <span class="n">allow_duplicate</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+        <span class="c1"># Callback to update the selected data</span>
+        <span class="nd">@self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
+            <span class="n">output_figure_list</span><span class="p">,</span>
+            <span class="n">Input</span><span class="p">(</span><span class="n">table_id</span><span class="p">,</span> <span class="s1">&#39;active_cell&#39;</span><span class="p">),</span>
+            <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">update_graphs</span><span class="p">(</span><span class="n">active_cell</span><span class="p">):</span>
+            <span class="c1"># add a vertical line to each graph in the layout addressing the timestamp selected from datatable</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_time</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">active_cell</span><span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">Time</span> <span class="k">if</span> <span class="n">active_cell</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="n">output_figure_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">figures_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">):</span>
+                    <span class="n">output_figure_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">))</span>
+                    <span class="n">graph_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">layout</span><span class="p">[</span><span class="n">component</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+                    <span class="n">graph_element</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">shapes</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">graph_element</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">add_vline</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_time</span><span class="p">,</span> <span class="n">line_dash</span><span class="o">=</span><span class="s2">&quot;dash&quot;</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+                    <span class="n">figures_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graph_element</span><span class="o">.</span><span class="n">figure</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">figures_list</span></div>
+
+<div class="viewcode-block" id="BagDash.add_diagnostics_dash"><a class="viewcode-back" href="../../rosbag_dash.html#rosbag_dash.bagdash.BagDash.add_diagnostics_dash">[docs]</a>    <span class="k">def</span> <span class="nf">add_diagnostics_dash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic_name</span><span class="o">=</span><span class="s2">&quot;/diagnostics&quot;</span><span class="p">,</span> <span class="n">name_filter</span><span class="o">=</span><span class="p">[],</span> <span class="n">annotate_names</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_diagnostics_figure</span><span class="p">(</span><span class="n">topic_name</span><span class="o">=</span><span class="n">topic_name</span><span class="p">,</span> <span class="n">name_filter</span><span class="o">=</span><span class="n">name_filter</span><span class="p">,</span> <span class="n">annotate_names</span><span class="o">=</span><span class="n">annotate_names</span><span class="p">)</span>    
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">topic_name</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="BagDash.add_rosout_dash"><a class="viewcode-back" href="../../rosbag_dash.html#rosbag_dash.bagdash.BagDash.add_rosout_dash">[docs]</a>    <span class="k">def</span> <span class="nf">add_rosout_dash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic_name</span><span class="o">=</span><span class="s2">&quot;/rosout&quot;</span><span class="p">,</span> <span class="n">name_filter</span><span class="o">=</span><span class="p">[],</span> <span class="n">annotate_names</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_rosout_figure</span><span class="p">(</span><span class="n">topic_name</span><span class="o">=</span><span class="n">topic_name</span><span class="p">,</span> <span class="n">name_filter</span><span class="o">=</span><span class="n">name_filter</span><span class="p">,</span> <span class="n">annotate_names</span><span class="o">=</span><span class="n">annotate_names</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">topic_name</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">))</span></div>
+        
+<div class="viewcode-block" id="BagDash.add_laserscan_dash"><a class="viewcode-back" href="../../rosbag_dash.html#rosbag_dash.bagdash.BagDash.add_laserscan_dash">[docs]</a>    <span class="k">def</span> <span class="nf">add_laserscan_dash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">laser_topic</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        plots the laserscan in polar coordinates as an interactive graph and the viewing message can be updated by slider</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        laser_topic: `str` (optional)</span>
+<span class="sd">          topic name can be given otherwise it plots the first laserScan message in the topic_table if there is</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">laser_topic</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_topic_dataframe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">laser_topic</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_topic_type_valid</span><span class="p">(</span><span class="n">laser_topic</span><span class="p">,</span> <span class="s1">&#39;sensor_msgs/LaserScan&#39;</span><span class="p">)):</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">topic_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_same_type_of_topics</span><span class="p">(</span><span class="s2">&quot;sensor_msgs/LaserScan&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">topic_list</span><span class="p">:</span>
+                <span class="n">laser_topic</span> <span class="o">=</span> <span class="n">topic_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">update_topic_dataframe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">laser_topic</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;There is no LaserScan message&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
+        
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_polars</span><span class="p">(</span><span class="n">radialaxis_range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">bag_df_dict</span><span class="p">[</span><span class="n">laser_topic</span><span class="p">]</span><span class="o">.</span><span class="n">range_max</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">layout</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">laser_topic</span>
+
+        <span class="n">msg_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bag_df_dict</span><span class="p">[</span><span class="n">laser_topic</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;laserscan-plot&#39;</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Slider</span><span class="p">(</span>
+              <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;slider&#39;</span><span class="p">,</span>
+              <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+              <span class="nb">max</span><span class="o">=</span><span class="n">msg_size</span><span class="p">,</span>
+              <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+              <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+              <span class="n">tooltip</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placement&quot;</span><span class="p">:</span> <span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="s2">&quot;always_visible&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+              <span class="n">marks</span><span class="o">=</span><span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">msg_size</span><span class="p">,</span> <span class="n">msg_size</span><span class="o">//</span><span class="mi">10</span><span class="p">)},</span>
+              <span class="n">updatemode</span><span class="o">=</span><span class="s1">&#39;drag&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+      
+        <span class="nd">@self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
+        <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;laserscan-plot&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+        <span class="p">[</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;slider&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)],</span>
+        <span class="p">[</span><span class="n">State</span><span class="p">(</span><span class="s1">&#39;laserscan-plot&#39;</span><span class="p">,</span> <span class="s1">&#39;relayoutData&#39;</span><span class="p">)]</span>
+        <span class="p">)</span>
+        <span class="k">def</span> <span class="nf">update_figure</span><span class="p">(</span><span class="n">selected_value</span><span class="p">,</span> <span class="n">relayout_data</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            slider callback: updates figure whenever slider is moved and keeps the zoom value</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bag_df_dict</span><span class="p">[</span><span class="n">laser_topic</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">selected_value</span><span class="p">]</span>
+            <span class="n">new_figure</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span> <span class="c1"># to deal with the concurrent requests</span>
+            <span class="n">new_figure</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">angle_min</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">angle_max</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">angle_increment</span><span class="p">)</span>
+            <span class="n">new_figure</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+                <span class="n">go</span><span class="o">.</span><span class="n">Scatterpolargl</span><span class="p">(</span>
+                    <span class="n">r</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">ranges</span><span class="p">,</span>
+                    <span class="n">theta</span> <span class="o">=</span> <span class="n">angles</span><span class="p">,</span>
+                    <span class="n">thetaunit</span> <span class="o">=</span> <span class="s1">&#39;radians&#39;</span><span class="p">,</span>
+                    <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;markers&quot;</span><span class="p">,</span>
+                    <span class="n">marker</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Timestamp:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">Time</span><span class="p">),</span>
+                    <span class="n">showlegend</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="p">))</span>
+            <span class="k">if</span> <span class="n">relayout_data</span> <span class="ow">and</span> <span class="s1">&#39;polar.radialaxis.range&#39;</span> <span class="ow">in</span> <span class="n">relayout_data</span><span class="p">:</span>
+                <span class="n">new_figure</span><span class="p">[</span><span class="s1">&#39;layout.polar.radialaxis.range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">relayout_data</span><span class="p">[</span><span class="s1">&#39;polar.radialaxis.range&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">new_figure</span>
+          
+        <span class="n">update_figure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">fig</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="BagDash.add_pointcloud_dash"><a class="viewcode-back" href="../../rosbag_dash.html#rosbag_dash.bagdash.BagDash.add_pointcloud_dash">[docs]</a>    <span class="k">def</span> <span class="nf">add_pointcloud_dash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pointcloud_topic</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        plots the pointcloud in cartesian coordinates as an interactive graph and the viewing message can be updated by slider</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pointcloud_topic: `str` (optional)</span>
+<span class="sd">          topic name can be given otherwise it plots the first pointcloud message in the topic_table if there is</span>
+<span class="sd">        &#39;&#39;&#39;</span>      
+        <span class="k">if</span> <span class="n">pointcloud_topic</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_topic_dataframe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">pointcloud_topic</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_topic_type_valid</span><span class="p">(</span><span class="n">pointcloud_topic</span><span class="p">,</span> <span class="s1">&#39;sensor_msgs/PointCloud&#39;</span><span class="p">)):</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">topic_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_same_type_of_topics</span><span class="p">(</span><span class="s2">&quot;sensor_msgs/PointCloud&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">topic_list</span><span class="p">:</span>
+                <span class="n">pointcloud_topic</span> <span class="o">=</span> <span class="n">topic_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">update_topic_dataframe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">pointcloud_topic</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;There is no PointCloud message&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
+        
+        <span class="c1"># declare axis range before plotting the data. causes additional iteration but provides static and easy visualization</span>
+        <span class="n">min_x</span><span class="p">,</span> <span class="n">min_y</span><span class="p">,</span> <span class="n">min_z</span><span class="p">,</span> <span class="n">max_x</span><span class="p">,</span> <span class="n">max_y</span><span class="p">,</span> <span class="n">max_z</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">points</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bag_df_dict</span><span class="p">[</span><span class="n">pointcloud_topic</span><span class="p">]</span><span class="o">.</span><span class="n">points</span><span class="p">:</span>
+            <span class="n">x_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">point</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">]</span>
+            <span class="n">y_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">point</span><span class="o">.</span><span class="n">y</span> <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">]</span>
+            <span class="n">z_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">point</span><span class="o">.</span><span class="n">z</span> <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">]</span>
+            <span class="n">min_x</span><span class="p">,</span> <span class="n">max_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">x_values</span><span class="p">),</span> <span class="n">min_x</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">x_values</span><span class="p">),</span> <span class="n">max_x</span><span class="p">)</span>
+            <span class="n">min_y</span><span class="p">,</span> <span class="n">max_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">y_values</span><span class="p">),</span> <span class="n">min_y</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">y_values</span><span class="p">),</span> <span class="n">max_y</span><span class="p">)</span>
+            <span class="n">min_z</span><span class="p">,</span> <span class="n">max_z</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">z_values</span><span class="p">),</span> <span class="n">min_z</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">z_values</span><span class="p">),</span> <span class="n">max_z</span><span class="p">)</span>
+            
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">layout</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pointcloud_topic</span>
+        
+        <span class="n">msg_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bag_df_dict</span><span class="p">[</span><span class="n">pointcloud_topic</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;pointcloud-plot&#39;</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Slider</span><span class="p">(</span>
+              <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;slider&#39;</span><span class="p">,</span>
+              <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+              <span class="nb">max</span><span class="o">=</span><span class="n">msg_size</span><span class="p">,</span>
+              <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+              <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+              <span class="n">tooltip</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;placement&quot;</span><span class="p">:</span> <span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="s2">&quot;always_visible&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+              <span class="n">marks</span><span class="o">=</span><span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">msg_size</span><span class="p">,</span> <span class="n">msg_size</span><span class="o">//</span><span class="mi">10</span><span class="p">)},</span>
+              <span class="n">updatemode</span><span class="o">=</span><span class="s1">&#39;drag&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+      
+        <span class="nd">@self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
+        <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;pointcloud-plot&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+        <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;slider&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+        <span class="n">State</span><span class="p">(</span><span class="s1">&#39;pointcloud-plot&#39;</span><span class="p">,</span> <span class="s1">&#39;relayoutData&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">def</span> <span class="nf">update_figure</span><span class="p">(</span><span class="n">selected_value</span><span class="p">,</span> <span class="n">relayout_data</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            slider callback: updates figure whenever slider is moved and keeps the zoom value</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bag_df_dict</span><span class="p">[</span><span class="n">pointcloud_topic</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">selected_value</span><span class="p">]</span>
+            <span class="n">new_figure</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+            <span class="n">new_figure</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">new_figure</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+                <span class="n">go</span><span class="o">.</span><span class="n">Scatter3d</span><span class="p">(</span>
+                    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">point</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">points</span><span class="p">],</span>
+                    <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">point</span><span class="o">.</span><span class="n">y</span> <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">points</span><span class="p">],</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="p">[</span><span class="n">point</span><span class="o">.</span><span class="n">z</span> <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">points</span><span class="p">],</span>
+                    <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;markers&quot;</span><span class="p">,</span>
+                    <span class="n">marker</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Timestamp:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">Time</span><span class="p">),</span>
+                    <span class="n">showlegend</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">relayout_data</span><span class="p">:</span>
+                <span class="n">new_figure</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">relayout_data</span>
+                
+            <span class="n">new_figure</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">scene</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="n">aspectmode</span><span class="o">=</span><span class="s1">&#39;manual&#39;</span><span class="p">,</span>
+                <span class="n">aspectratio</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">max_x</span><span class="o">-</span><span class="n">min_x</span><span class="p">),</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">max_y</span><span class="o">-</span><span class="n">min_y</span><span class="p">),</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">max_z</span><span class="o">-</span><span class="n">min_z</span><span class="p">)},</span>
+                <span class="n">xaxis</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="n">min_x</span><span class="p">,</span> <span class="n">max_x</span><span class="p">],</span> <span class="n">ticks</span><span class="o">=</span><span class="s1">&#39;outside&#39;</span><span class="p">,</span> <span class="n">tickwidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">tickcolor</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">),</span>
+                <span class="n">yaxis</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="n">min_y</span><span class="p">,</span> <span class="n">max_y</span><span class="p">],</span> <span class="n">ticks</span><span class="o">=</span><span class="s1">&#39;outside&#39;</span><span class="p">,</span> <span class="n">tickwidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">tickcolor</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">),</span>
+                <span class="n">zaxis</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="n">min_z</span><span class="p">,</span> <span class="n">max_z</span><span class="p">],</span> <span class="n">ticks</span><span class="o">=</span><span class="s1">&#39;outside&#39;</span><span class="p">,</span> <span class="n">tickwidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">tickcolor</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">),</span>
+            <span class="p">))</span>
+                
+            <span class="k">return</span> <span class="n">new_figure</span>
+          
+        <span class="n">update_figure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">fig</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">])</span></div>
+        
+<div class="viewcode-block" id="BagDash.add_pointcloud2_dash"><a class="viewcode-back" href="../../rosbag_dash.html#rosbag_dash.bagdash.BagDash.add_pointcloud2_dash">[docs]</a>    <span class="k">def</span> <span class="nf">add_pointcloud2_dash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pointcloud2_topic</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>        </div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Aykut Kabaoglu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rosbag_dash package &mdash; rosbag-dash 0.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            rosbag-dash
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">rosbag_dash package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-rosbag_dash.bagdash">rosbag_dash.bagdash module</a><ul>
+<li><a class="reference internal" href="#rosbag_dash.bagdash.BagDash"><code class="docutils literal notranslate"><span class="pre">BagDash</span></code></a><ul>
+<li><a class="reference internal" href="#rosbag_dash.bagdash.BagDash.add_dash_dataTable"><code class="docutils literal notranslate"><span class="pre">BagDash.add_dash_dataTable()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagdash.BagDash.add_dash_graph"><code class="docutils literal notranslate"><span class="pre">BagDash.add_dash_graph()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagdash.BagDash.add_diagnostics_dash"><code class="docutils literal notranslate"><span class="pre">BagDash.add_diagnostics_dash()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagdash.BagDash.add_laserscan_dash"><code class="docutils literal notranslate"><span class="pre">BagDash.add_laserscan_dash()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagdash.BagDash.add_pointcloud2_dash"><code class="docutils literal notranslate"><span class="pre">BagDash.add_pointcloud2_dash()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagdash.BagDash.add_pointcloud_dash"><code class="docutils literal notranslate"><span class="pre">BagDash.add_pointcloud_dash()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagdash.BagDash.add_rosout_dash"><code class="docutils literal notranslate"><span class="pre">BagDash.add_rosout_dash()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagdash.BagDash.run"><code class="docutils literal notranslate"><span class="pre">BagDash.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-rosbag_dash.bagplot">rosbag_dash.bagplot module</a><ul>
+<li><a class="reference internal" href="#rosbag_dash.bagplot.BagPlot"><code class="docutils literal notranslate"><span class="pre">BagPlot</span></code></a><ul>
+<li><a class="reference internal" href="#rosbag_dash.bagplot.BagPlot.create_diagnostics_figure"><code class="docutils literal notranslate"><span class="pre">BagPlot.create_diagnostics_figure()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagplot.BagPlot.create_figure"><code class="docutils literal notranslate"><span class="pre">BagPlot.create_figure()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagplot.BagPlot.create_rosout_figure"><code class="docutils literal notranslate"><span class="pre">BagPlot.create_rosout_figure()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagplot.BagPlot.plot"><code class="docutils literal notranslate"><span class="pre">BagPlot.plot()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagplot.BagPlot.plot_diagnostics"><code class="docutils literal notranslate"><span class="pre">BagPlot.plot_diagnostics()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagplot.BagPlot.plot_rosout"><code class="docutils literal notranslate"><span class="pre">BagPlot.plot_rosout()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-rosbag_dash.bagreader">rosbag_dash.bagreader module</a><ul>
+<li><a class="reference internal" href="#rosbag_dash.bagreader.BagReader"><code class="docutils literal notranslate"><span class="pre">BagReader</span></code></a><ul>
+<li><a class="reference internal" href="#rosbag_dash.bagreader.BagReader.reader"><code class="docutils literal notranslate"><span class="pre">BagReader.reader</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagreader.BagReader.topic_table"><code class="docutils literal notranslate"><span class="pre">BagReader.topic_table</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagreader.BagReader.bag_df_dict"><code class="docutils literal notranslate"><span class="pre">BagReader.bag_df_dict</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagreader.BagReader.get_message_by_topic"><code class="docutils literal notranslate"><span class="pre">BagReader.get_message_by_topic()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagreader.BagReader.get_same_type_of_topics"><code class="docutils literal notranslate"><span class="pre">BagReader.get_same_type_of_topics()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagreader.BagReader.is_topic_found"><code class="docutils literal notranslate"><span class="pre">BagReader.is_topic_found()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagreader.BagReader.is_topic_type_valid"><code class="docutils literal notranslate"><span class="pre">BagReader.is_topic_type_valid()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagreader.BagReader.quaternion_to_euler"><code class="docutils literal notranslate"><span class="pre">BagReader.quaternion_to_euler()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.bagreader.BagReader.update_topic_dataframe"><code class="docutils literal notranslate"><span class="pre">BagReader.update_topic_dataframe()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-rosbag_dash.helper">rosbag_dash.helper module</a><ul>
+<li><a class="reference internal" href="#rosbag_dash.helper.divide_message"><code class="docutils literal notranslate"><span class="pre">divide_message()</span></code></a></li>
+<li><a class="reference internal" href="#rosbag_dash.helper.slotvalues"><code class="docutils literal notranslate"><span class="pre">slotvalues()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-rosbag_dash">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">rosbag-dash</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">rosbag_dash package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/rosbag_dash.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rosbag-dash-package">
+<h1>rosbag_dash package<a class="headerlink" href="#rosbag-dash-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-rosbag_dash.bagdash">
+<span id="rosbag-dash-bagdash-module"></span><h2>rosbag_dash.bagdash module<a class="headerlink" href="#module-rosbag_dash.bagdash" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="rosbag_dash.bagdash.BagDash">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rosbag_dash.bagdash.</span></span><span class="sig-name descname"><span class="pre">BagDash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bagfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagdash.html#BagDash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagdash.BagDash" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rosbag_dash.bagplot.BagPlot" title="rosbag_dash.bagplot.BagPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">BagPlot</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagdash.BagDash.add_dash_dataTable">
+<span class="sig-name descname"><span class="pre">add_dash_dataTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagdash.html#BagDash.add_dash_dataTable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagdash.BagDash.add_dash_dataTable" title="Permalink to this definition"></a></dt>
+<dd><p>create dash datatable from pandas dataframe
+the selected row’s timestamp will be shown on any other graphs to indicate same moment by drawing vertical line</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagdash.BagDash.add_dash_graph">
+<span class="sig-name descname"><span class="pre">add_dash_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg_dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagdash.html#BagDash.add_dash_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagdash.BagDash.add_dash_graph" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagdash.BagDash.add_diagnostics_dash">
+<span class="sig-name descname"><span class="pre">add_diagnostics_dash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/diagnostics'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotate_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagdash.html#BagDash.add_diagnostics_dash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagdash.BagDash.add_diagnostics_dash" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagdash.BagDash.add_laserscan_dash">
+<span class="sig-name descname"><span class="pre">add_laserscan_dash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">laser_topic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagdash.html#BagDash.add_laserscan_dash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagdash.BagDash.add_laserscan_dash" title="Permalink to this definition"></a></dt>
+<dd><p>plots the laserscan in polar coordinates as an interactive graph and the viewing message can be updated by slider</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>laser_topic</strong> (<cite>str</cite> (optional)) – topic name can be given otherwise it plots the first laserScan message in the topic_table if there is</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagdash.BagDash.add_pointcloud2_dash">
+<span class="sig-name descname"><span class="pre">add_pointcloud2_dash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pointcloud2_topic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagdash.html#BagDash.add_pointcloud2_dash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagdash.BagDash.add_pointcloud2_dash" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagdash.BagDash.add_pointcloud_dash">
+<span class="sig-name descname"><span class="pre">add_pointcloud_dash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pointcloud_topic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagdash.html#BagDash.add_pointcloud_dash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagdash.BagDash.add_pointcloud_dash" title="Permalink to this definition"></a></dt>
+<dd><p>plots the pointcloud in cartesian coordinates as an interactive graph and the viewing message can be updated by slider</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pointcloud_topic</strong> (<cite>str</cite> (optional)) – topic name can be given otherwise it plots the first pointcloud message in the topic_table if there is</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagdash.BagDash.add_rosout_dash">
+<span class="sig-name descname"><span class="pre">add_rosout_dash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/rosout'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotate_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagdash.html#BagDash.add_rosout_dash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagdash.BagDash.add_rosout_dash" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagdash.BagDash.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagdash.html#BagDash.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagdash.BagDash.run" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-rosbag_dash.bagplot">
+<span id="rosbag-dash-bagplot-module"></span><h2>rosbag_dash.bagplot module<a class="headerlink" href="#module-rosbag_dash.bagplot" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="rosbag_dash.bagplot.BagPlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rosbag_dash.bagplot.</span></span><span class="sig-name descname"><span class="pre">BagPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bagfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagplot.html#BagPlot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagplot.BagPlot" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rosbag_dash.bagreader.BagReader" title="rosbag_dash.bagreader.BagReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">BagReader</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagplot.BagPlot.create_diagnostics_figure">
+<span class="sig-name descname"><span class="pre">create_diagnostics_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/diagnostics'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotate_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagplot.html#BagPlot.create_diagnostics_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagplot.BagPlot.create_diagnostics_figure" title="Permalink to this definition"></a></dt>
+<dd><p>plots diagnostics messages according the their levels like OK, WARN, ERROR, STALE. it hovers the details of each message over the graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>topic_name</strong> (<cite>str</cite>) – </p></li>
+<li><p><strong>name_filter</strong> (<cite>list</cite> (optional)) – list of strings that can be used to plot only the desired named messages. it acts as searching and don’t have to be exact name
+if it is empty, plots all messages</p></li>
+<li><p><strong>annotate_names</strong> (<cite>bool</cite>) – names can be viewed over the marker in addition to hover text. this is a time consuming process</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagplot.BagPlot.create_figure">
+<span class="sig-name descname"><span class="pre">create_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg_dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagplot.html#BagPlot.create_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagplot.BagPlot.create_figure" title="Permalink to this definition"></a></dt>
+<dd><p>Creates and returns a figure that plots the timseries given topic and its indexes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagplot.BagPlot.create_rosout_figure">
+<span class="sig-name descname"><span class="pre">create_rosout_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/rosout'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotate_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagplot.html#BagPlot.create_rosout_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagplot.BagPlot.create_rosout_figure" title="Permalink to this definition"></a></dt>
+<dd><p>plots rosout messages according the their levels like DEBUG, INFO, WARN, ERROR, FATAL. it hovers the details of each message over the graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>topic_name</strong> (<cite>str</cite>) – </p></li>
+<li><p><strong>name_filter</strong> (<cite>list</cite> (optional)) – list of strings that can be used to plot only the desired named messages. it acts as searching and don’t have to be exact name
+if it is empty, plots all messages</p></li>
+<li><p><strong>annotate_names</strong> (<cite>bool</cite>) – names can be viewed over the marker in addition to hover text. this is a time consuming process</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagplot.BagPlot.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg_dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagplot.html#BagPlot.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagplot.BagPlot.plot" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagplot.BagPlot.plot_diagnostics">
+<span class="sig-name descname"><span class="pre">plot_diagnostics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/diagnostics'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotate_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagplot.html#BagPlot.plot_diagnostics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagplot.BagPlot.plot_diagnostics" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagplot.BagPlot.plot_rosout">
+<span class="sig-name descname"><span class="pre">plot_rosout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/rosout'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotate_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagplot.html#BagPlot.plot_rosout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagplot.BagPlot.plot_rosout" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-rosbag_dash.bagreader">
+<span id="rosbag-dash-bagreader-module"></span><h2>rosbag_dash.bagreader module<a class="headerlink" href="#module-rosbag_dash.bagreader" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="rosbag_dash.bagreader.BagReader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rosbag_dash.bagreader.</span></span><span class="sig-name descname"><span class="pre">BagReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bagfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/bagreader.html#BagReader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagreader.BagReader" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p><cite>bagreader</cite> class provides API to read rosbag files in an effective easy manner with significant hassle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bagfile</strong> (<cite>string</cite>) – Bagreader constructor takes name of a bag file as an  argument. name of the bag file can be provided as the full qualified path, relative path or just the file name.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rosbag_dash.bagreader.BagReader.reader">
+<span class="sig-name descname"><span class="pre">reader</span></span><a class="headerlink" href="#rosbag_dash.bagreader.BagReader.reader" title="Permalink to this definition"></a></dt>
+<dd><p>rosbag.Bag object that</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>rosbag.Bag</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rosbag_dash.bagreader.BagReader.topic_table">
+<span class="sig-name descname"><span class="pre">topic_table</span></span><a class="headerlink" href="#rosbag_dash.bagreader.BagReader.topic_table" title="Permalink to this definition"></a></dt>
+<dd><p>A pandas DataFrame showing list of topics, their types, frequencies and message counts</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>pandas.DataFrame</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rosbag_dash.bagreader.BagReader.bag_df_dict">
+<span class="sig-name descname"><span class="pre">bag_df_dict</span></span><a class="headerlink" href="#rosbag_dash.bagreader.BagReader.bag_df_dict" title="Permalink to this definition"></a></dt>
+<dd><p>dictionary to keep dataframes of each topic by name. it only stores the requested topics</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>dictionary</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">bagreader</span><span class="p">(</span><span class="s1">&#39;2020-03-01-23-52-11.bag&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagreader.BagReader.get_message_by_topic">
+<span class="sig-name descname"><span class="pre">get_message_by_topic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/rosbag_dash/bagreader.html#BagReader.get_message_by_topic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagreader.BagReader.get_message_by_topic" title="Permalink to this definition"></a></dt>
+<dd><p>Gets single topic name as a string or list of topic names and returns single dataframe or dataframe dictionary that it’s keys are topic names
+:param topics: list or single str of topic names</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagreader.BagReader.get_same_type_of_topics">
+<span class="sig-name descname"><span class="pre">get_same_type_of_topics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type_to_look</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/rosbag_dash/bagreader.html#BagReader.get_same_type_of_topics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagreader.BagReader.get_same_type_of_topics" title="Permalink to this definition"></a></dt>
+<dd><p>Collects the same type of topics and returns the list of topic names</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagreader.BagReader.is_topic_found">
+<span class="sig-name descname"><span class="pre">is_topic_found</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/rosbag_dash/bagreader.html#BagReader.is_topic_found"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagreader.BagReader.is_topic_found" title="Permalink to this definition"></a></dt>
+<dd><p>Returns whether the topic is found in bag file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagreader.BagReader.is_topic_type_valid">
+<span class="sig-name descname"><span class="pre">is_topic_type_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/rosbag_dash/bagreader.html#BagReader.is_topic_type_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagreader.BagReader.is_topic_type_valid" title="Permalink to this definition"></a></dt>
+<dd><p>Checks topic type is as desired</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagreader.BagReader.quaternion_to_euler">
+<span class="sig-name descname"><span class="pre">quaternion_to_euler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/rosbag_dash/bagreader.html#BagReader.quaternion_to_euler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagreader.BagReader.quaternion_to_euler" title="Permalink to this definition"></a></dt>
+<dd><p>Convert quaternions to euler if there is a quaternion type message</p>
+<p>checks ‘.w’ or ‘w’ pattern in the end of columns and adds ‘Roll’, ‘Pitch’, ‘Yaw’ columns to given dataframe</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rosbag_dash.bagreader.BagReader.update_topic_dataframe">
+<span class="sig-name descname"><span class="pre">update_topic_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/rosbag_dash/bagreader.html#BagReader.update_topic_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.bagreader.BagReader.update_topic_dataframe" title="Permalink to this definition"></a></dt>
+<dd><p>Class method <cite>update_topic_dataframe</cite> to extract message from the ROS Bag by topic name <cite>topic</cite> and
+stores it in the class’s dataframe. It is intended to update the class attribute and is used a helper method like a private function</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-rosbag_dash.helper">
+<span id="rosbag-dash-helper-module"></span><h2>rosbag_dash.helper module<a class="headerlink" href="#module-rosbag_dash.helper" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="rosbag_dash.helper.divide_message">
+<span class="sig-prename descclassname"><span class="pre">rosbag_dash.helper.</span></span><span class="sig-name descname"><span class="pre">divide_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/helper.html#divide_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.helper.divide_message" title="Permalink to this definition"></a></dt>
+<dd><p>Divide message into name index</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rosbag_dash.helper.slotvalues">
+<span class="sig-prename descclassname"><span class="pre">rosbag_dash.helper.</span></span><span class="sig-name descname"><span class="pre">slotvalues</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slot</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rosbag_dash/helper.html#slotvalues"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rosbag_dash.helper.slotvalues" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-rosbag_dash">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-rosbag_dash" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Aykut Kabaoglu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
