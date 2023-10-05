@@ -1,0 +1,12 @@
+numpy
+pycryptodomex
+pyyaml
+rospkg
+ipython
+gnupg
+pandas
+setuptools-scm
+importlib-resources
+plotly
+dash
+scipy
