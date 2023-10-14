@@ -8,7 +8,10 @@ rosbag_dash package provides three modules as bagreader, bagplot and bagdash.
 * **BagDash** class allows users to create dash applications. It can use the capabilities of BagPlot by adding the feature of drawing sensor_msgs/LaserScan and sensor_msgs/PointCloud topics. These graphs are dynamic and you can view the instantaneous data by dragging the slider. Additionally, you can create dataTables to view all messages of any topic in a table, it is especially useful for text based topics. The rows of these tables are selectable and all the figures are annotated according to selected timestamp (it is slow).
 
 ## Installation
-
+```
+pip install rosbag-dash
+```
+or
 ```
 git clone https://github.com/aykutkabaoglu/rosbag-dash.git
 python3 -m pip install rosbag-dash
